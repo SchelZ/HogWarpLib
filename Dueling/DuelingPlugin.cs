@@ -36,14 +36,19 @@ namespace Dueling
                     cancel = true;
                     return;
                 }
+                var buffer = new Buffer(2);
+                var writer = new BufferWriter(buffer);
 
-                foreach (var playerName in _server!.PlayerManager.Players)
+                foreach (var pPlayer in _server!.PlayerManager.Players)
                 {
-                    if (String.Compare(playerName.Name, split[1], StringComparison.OrdinalIgnoreCase) == 0)
+                    if (String.Compare(pPlayer.Name, split[1], StringComparison.OrdinalIgnoreCase) == 0)
+                    {
                         Console.WriteLine("we found player");
+                        _server!.PlayerManager.SendTo(pPlayer, Name, 55, writer);
+                    }
                     else
                     {
-                        player.SendMessage("Player not found!");
+                        pPlayer.SendMessage("Player not found!");
                     }
                 }
             }

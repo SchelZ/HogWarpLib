@@ -34,7 +34,6 @@ namespace HogWarp.Loader
             {
                 try
                 {
-                    //var path = Path.Combine(pluginLocation, location, "Assembly-Plugin.dll");
                     var path = Directory.GetFiles(Path.Combine(pluginLocation, location), "*.dll");
                     foreach (var dll in path)
                     {

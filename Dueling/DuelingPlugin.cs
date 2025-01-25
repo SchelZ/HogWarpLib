@@ -37,9 +37,14 @@ namespace Dueling
                     return;
                 }
 
-                foreach (var playerName in _server.PlayerManager.Players)
+                foreach (var playerName in _server!.PlayerManager.Players)
                 {
-                    Console.WriteLine(playerName.Name);
+                    if (String.Compare(playerName.Name, split[1], StringComparison.OrdinalIgnoreCase) == 0)
+                        Console.WriteLine("we found player");
+                    else
+                    {
+                        player.SendMessage("Player not found!");
+                    }
                 }
             }
         }

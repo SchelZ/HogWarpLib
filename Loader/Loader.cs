@@ -34,11 +34,22 @@ namespace HogWarp.Loader
             {
                 try
                 {
-                    var path = Path.Combine(pluginLocation, location, "Assembly-Plugin.dll");
-                    var assembly = LoadPlugin(path);
-                    if (assembly != null)
+                    //var path = Path.Combine(pluginLocation, location, "Assembly-Plugin.dll");
+                    var path = Directory.GetFiles(Path.Combine(pluginLocation, location), "*.dll");
+                    foreach (var dll in path)
                     {
-                        _plugins.AddRange(CreatePlugins(assembly));
+                        try
+                        {
+                            var assembly = LoadPlugin(dll);
+                            if (assembly != null)
+                            {
+                                _plugins.AddRange(CreatePlugins(assembly));
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Serilog.Log.Logger.Error($"Bad plugin {dll}");
+                        }
                     }
                 }
                 catch( Exception ex ) 
